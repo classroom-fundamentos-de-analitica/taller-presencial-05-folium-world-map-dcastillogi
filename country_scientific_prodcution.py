@@ -5,6 +5,7 @@ import folium
 
 def load_affiliations():
     """Carga el archivo scopus-papers.csv y retorna un dataframe con la columna 'Affiliations'"""
+
     dataframe = pd.read_csv(
         "https://raw.githubusercontent.com/jdvelasq/datalabs/master/datasets/scopus-papers.csv",
         sep=",",
@@ -78,12 +79,13 @@ def plot_world_map(countries):
 
 def main():
     """Función principal"""
+
     affiliations = load_affiliations()
     affiliations = remove_na_rows(affiliations)
     affiliations = add_countries_column(affiliations)
     affiliations = clean_countries(affiliations)
     countries = count_country_frequency(affiliations)
-    countries.to_csv("countries.csv")
+    countries.to_csv("country.csv")
     plot_world_map(countries)
 
 
