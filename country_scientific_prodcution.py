@@ -42,7 +42,7 @@ def add_countries_column(affiliations):
 
 def clean_countries(affiliations):
     affiliations = affiliations.copy()
-    affiliations["countries"] = affiliations["countries"].str.replace(
+    affiliations["country"] = affiliations["countries"].str.replace(
         "United States", "United States of America"
     )
     return affiliations
@@ -50,7 +50,7 @@ def clean_countries(affiliations):
 def count_country_frequency(affiliations):
     """Cuenta la frecuencia de los paises en la columna 'countries'"""
 
-    affiliations = affiliations["countries"].copy()
+    affiliations = affiliations["country"].copy()
     countries = affiliations.str.split(", ")
     countries = countries.explode()
     countries = countries.value_counts()
@@ -69,7 +69,7 @@ def plot_world_map(countries):
     folium.Choropleth(
         geo_data="https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/world-countries.json",
         data=countries,
-        columns=["countries", "count"],
+        columns=["country", "count"],
         key_on="feature.properties.name",
         fill_color="Greens",
     ).add_to(m)
@@ -85,7 +85,7 @@ def main():
     affiliations = add_countries_column(affiliations)
     affiliations = clean_countries(affiliations)
     countries = count_country_frequency(affiliations)
-    countries.to_csv("country.csv")
+    countries.to_csv("countries.csv")
     plot_world_map(countries)
 
 
